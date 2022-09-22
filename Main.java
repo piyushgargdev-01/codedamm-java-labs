@@ -1,26 +1,13 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String args[]) {
-        // Integers
-        int age = 22;
-        int x = 5;
+       Scanner scanner = new Scanner(System.in);
 
-        // Floats
-        float pi = 3.14f;
+       System.out.print("Whats your age? ");
+       int age = scanner.nextInt();
 
-        // Booleans
-        boolean isGraduated = true;
-
-        // Chars
-        char gender = 'm';
-
-        System.out.println("Your age is " + age);
-        System.out.println("The value of x is " + x);
-
-        System.out.println("PI = " + pi);
-
-        System.out.println("Am I graduated? - " + isGraduated);
-
-        System.out.println("My Gender is - " + gender);
+       System.out.println("Your age is " + age);
         
     }
 }
