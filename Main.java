@@ -10,8 +10,9 @@ public class Main {
 
     // Write your logic here to swap a and b
 
-    /* Do not alter the below code */
+    /* Do not alter or remove the below code */
     System.out.println(a);
     System.out.println(b);
+    System.out.print("-");
   }
 }
