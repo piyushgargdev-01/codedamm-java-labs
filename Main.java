@@ -3,9 +3,12 @@ class Person {
   private String name;
   private int age;
 
+  private static int numberOfPersons;
+
   Person(String name, int age) {
     this.name = name;
     this.age = age;
+    numberOfPersons++;
   }
 
   public void setName(String name) {
@@ -23,6 +26,10 @@ class Person {
   public int getAge() {
     return this.age;
   }
+
+  public static int getTotalPersons() {
+    return numberOfPersons;
+  }
 }
 
 public class Main {
@@ -34,5 +41,7 @@ public class Main {
     System.out.println(
       piyush.getName() + " is " + piyush.getAge() + " years old"
     );
+
+    System.out.println("Total Persons: " + Person.getTotalPersons());
   }
 }
