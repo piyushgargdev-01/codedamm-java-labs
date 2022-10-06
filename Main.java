@@ -1,60 +1,46 @@
-class TV {
+class DatabaseService {
 
-  public void switchOn() {
-    System.out.println("TV is ON");
+  private static DatabaseService obj;
+
+  private DatabaseService() {
+    System.out.println("Open a connection with DB");
   }
 
-  public void switchOff() {
-    System.out.println("TV is Off");
+  public static DatabaseService getInstance() {
+    if (obj == null) obj = new DatabaseService();
+    return obj;
   }
 
-  public void setVolume(int num) {
-    System.out.println("Vol is " + num);
+  public void getDataFromTables() {
+    System.out.println("Getting data from db");
   }
 
-  public void swicthSource(String source) {
-    System.out.println("Source is now " + source);
-  }
-}
-
-class RemoteControl {
-
-  private TV device;
-  private int currentVolume;
-
-  RemoteControl(TV device) {
-    this.device = device;
-    currentVolume = 10;
-  }
-
-  public void turnVolUp() {
-    this.device.setVolume(this.currentVolume++);
-  }
-
-  public void turnVolumeDown() {
-    this.device.setVolume(this.currentVolume--);
-  }
-
-  public void switchSource() {
-    this.device.swicthSource("GAME");
+  public void putDataInDatabase() {
+    System.out.println("Putting data in db");
   }
 }
 
-public class BridgeDesignPattern {
+class DatabaseProxyLayer {
+
+  private DatabaseService db;
+
+  DatabaseProxyLayer() {
+    this.db = DatabaseService.getInstance();
+  }
+
+  void putData(int data) {
+    this.db.putDataInDatabase();
+  }
+
+  void getData() {
+    this.db.getDataFromTables();
+  }
+}
+
+public class Main {
 
   public static void main(String args[]) {
-    TV tv = new TV();
-    RemoteControl rc = new RemoteControl(tv);
-
-    rc.turnVolumeDown();
-    rc.turnVolumeDown();
-    rc.turnVolumeDown();
-    rc.turnVolumeDown();
-
-    rc.turnVolUp();
-    rc.turnVolUp();
-    rc.turnVolUp();
-
-    rc.switchSource();
+    DatabaseProxyLayer dbLayer = new DatabaseProxyLayer();
+    dbLayer.putData(1);
   }
 }
