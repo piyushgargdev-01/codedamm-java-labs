@@ -58,6 +58,27 @@ class PiyushChannel {
   }
 }
 
+class SubscriberIterator {
+
+  private PiyushChannel channel;
+  private int currentIndex;
+
+  SubscriberIterator(PiyushChannel ch) {
+    this.channel = ch;
+    this.currentIndex = 0;
+  }
+
+  public Subscriber next() {
+    Subscriber subscriber = this.channel.getSubscribers().get(currentIndex);
+    currentIndex++;
+    return subscriber;
+  }
+
+  public boolean hasNext() {
+    return currentIndex < channel.getSubscribers().size();
+  }
+}
+
 public class ObserableDesignPattern {
 
   public static void main(String args[]) {
@@ -75,5 +96,9 @@ public class ObserableDesignPattern {
     channel.addSubscriber(jane);
 
     channel.publishVideo(new Video("Complete java Course"));
+
+    while (iterator.hasNext()) {
+      System.out.println(iterator.next());
+    }
   }
 }
