@@ -1,47 +1,91 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Person {
 
-  private String name;
-  private int age;
+  private String fullName;
 
-  private static int numberOfPersons;
-
-  Person(String name, int age) {
-    this.name = name;
-    this.age = age;
-    numberOfPersons++;
+  Person(String fullName) {
+    this.fullName = fullName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public String getFullName() {
+    return this.fullName;
   }
 
-  public void setAge(int age) {
-    this.age = age;
+  public void setFullName(String name) {
+    this.fullName = name;
+  }
+}
+
+class Student extends Person {
+
+  private int rollNumber;
+  private List<Student> friends;
+
+  static int numberOfStudents = 0;
+
+  Student(String fullname, int rollNumber) {
+    super(fullname);
+    this.friends = new ArrayList<>();
+    this.rollNumber = rollNumber;
+    numberOfStudents++;
   }
 
-  public String getName() {
-    return this.name;
+  public int getRollNumber() {
+    return this.rollNumber;
   }
 
-  public int getAge() {
-    return this.age;
+  public void setRollNumber(int newRoll) {
+    this.rollNumber = newRoll;
   }
 
-  public static int getTotalPersons() {
-    return numberOfPersons;
+  public List<Student> getFriends() {
+    return this.friends;
+  }
+
+  public void addFriend(Student student) {
+    this.friends.add(student);
+    student.friends.add(this);
+  }
+
+  public void removeFriend(Student student) {
+    this.friends.remove(student);
+    student.friends.remove(this);
+  }
+
+  public boolean isFriendOf(Student student) {
+    return this.friends.contains(student);
+  }
+
+  public int getRollNo(Student student) throws IllegalAccessException {
+    if (
+      this.friends.contains(student)
+    ) return student.rollNumber; else throw new IllegalAccessException(
+      "You are not friend of " + student.getFullName()
+    );
+  }
+
+  public String toString() {
+    return this.getFullName();
   }
 }
 
 public class Main {
 
-  public static void main(String[] args) {
-    Person piyush = new Person("Piyush", 22);
-    Person jhon = new Person("Jhon", 30);
+  public static void main(String args[]) {
+    Student piyush = new Student("Piyush", 1);
+    Student jhon = new Student("Jhon", 2);
+    Student jane = new Student("Jane", 3);
+    Student parry = new Student("Parry", 4);
 
-    System.out.println(
-      piyush.getName() + " is " + piyush.getAge() + " years old"
-    );
+    piyush.addFriend(jhon);
+    piyush.addFriend(jane);
 
-    System.out.println("Total Persons: " + Person.getTotalPersons());
+    try {
+      System.out.println(piyush.getRollNo(jane));
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }
 }
