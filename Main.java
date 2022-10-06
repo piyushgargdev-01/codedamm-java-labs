@@ -1,59 +1,60 @@
-class RoundPeg {
+class TV {
 
-  int radius;
-
-  RoundPeg(int r) {
-    this.radius = r;
+  public void switchOn() {
+    System.out.println("TV is ON");
   }
 
-  public int getRadius() {
-    return this.radius;
-  }
-}
-
-class RoundHole {
-
-  int radius;
-
-  RoundHole(int r) {
-    this.radius = r;
+  public void switchOff() {
+    System.out.println("TV is Off");
   }
 
-  public boolean canFit(RoundPeg hole) {
-    return this.radius >= hole.getRadius();
+  public void setVolume(int num) {
+    System.out.println("Vol is " + num);
+  }
+
+  public void swicthSource(String source) {
+    System.out.println("Source is now " + source);
   }
 }
 
-class SquarePeg {
+class RemoteControl {
 
-  int side;
+  private TV device;
+  private int currentVolume;
 
-  SquarePeg(int side) {
-    this.side = side;
+  RemoteControl(TV device) {
+    this.device = device;
+    currentVolume = 10;
+  }
+
+  public void turnVolUp() {
+    this.device.setVolume(this.currentVolume++);
+  }
+
+  public void turnVolumeDown() {
+    this.device.setVolume(this.currentVolume--);
+  }
+
+  public void switchSource() {
+    this.device.swicthSource("GAME");
   }
 }
 
-class SquarePegAdapter extends RoundPeg {
-
-  SquarePeg squarePeg;
-
-  SquarePegAdapter(SquarePeg squarePeg) {
-    super(squarePeg.side);
-    this.squarePeg = squarePeg;
-  }
-
-  public int getRadius() {
-    return (int) (squarePeg.side * Math.sqrt(2) / 2);
-  }
-}
-
-public class AdapterPattern {
+public class BridgeDesignPattern {
 
   public static void main(String args[]) {
-    RoundHole hole = new RoundHole(5);
-    RoundPeg peg = new RoundPeg(10);
-    SquarePeg squarePeg = new SquarePeg(4);
+    TV tv = new TV();
+    RemoteControl rc = new RemoteControl(tv);
 
-    System.out.println(hole.canFit(new SquarePegAdapter(squarePeg)));
+    rc.turnVolumeDown();
+    rc.turnVolumeDown();
+    rc.turnVolumeDown();
+    rc.turnVolumeDown();
+
+    rc.turnVolUp();
+    rc.turnVolUp();
+    rc.turnVolUp();
+
+    rc.switchSource();
   }
 }
