@@ -1,14 +1,21 @@
-import java.util.HashMap;
-import java.util.Map;
+class Person {
+
+  String name;
+  int age;
+}
 
 public class Main {
 
   public static void main(String[] args) {
-    Map<Integer, String> map = new HashMap<>();
-    map.put(1, "Piyush");
-    map.put(2, "Jhon");
-    map.put(3, "Jane");
+    Person piyush = new Person();
+    Person jhon = new Person();
 
-    System.out.println(map.get(1));
+    piyush.age = 22;
+    piyush.name = "Piyush Garg";
+
+    jhon.name = "Jhon";
+    jhon.age = 30;
+
+    System.out.println(piyush.name + " is " + piyush.age + " years old");
   }
 }
