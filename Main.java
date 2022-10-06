@@ -1,44 +1,59 @@
-class Car {
+class RoundPeg {
 
-  public String color;
-  public String make;
-  public String model;
+  int radius;
 
-  public int cc;
-  public int price;
-  public int bhp;
-  public int torqe;
+  RoundPeg(int r) {
+    this.radius = r;
+  }
 
-  void startCar() {
-    System.out.println(make + " " + model + " is now started");
+  public int getRadius() {
+    return this.radius;
   }
 }
 
-class CarBuilder {
+class RoundHole {
 
-  public static Car buildMyCar(
-    String make,
-    String model,
-    String color,
-    int cc,
-    int price,
-    int bhp
-  ) {
-    Car car = new Car();
-    car.make = make;
-    car.model = model;
-    car.color = color;
-    car.cc = cc;
-    car.price = price;
-    car.bhp = bhp;
-    return car;
+  int radius;
+
+  RoundHole(int r) {
+    this.radius = r;
+  }
+
+  public boolean canFit(RoundPeg hole) {
+    return this.radius >= hole.getRadius();
   }
 }
 
-public class Builder {
+class SquarePeg {
+
+  int side;
+
+  SquarePeg(int side) {
+    this.side = side;
+  }
+}
+
+class SquarePegAdapter extends RoundPeg {
+
+  SquarePeg squarePeg;
+
+  SquarePegAdapter(SquarePeg squarePeg) {
+    super(squarePeg.side);
+    this.squarePeg = squarePeg;
+  }
+
+  public int getRadius() {
+    return (int) (squarePeg.side * Math.sqrt(2) / 2);
+  }
+}
+
+public class AdapterPattern {
 
   public static void main(String args[]) {
-    Car car = CarBuilder.buildMyCar("Kia", "Seltos", "White", 1999, 2000, 100);
-    car.startCar();
+    RoundHole hole = new RoundHole(5);
+    RoundPeg peg = new RoundPeg(10);
+    SquarePeg squarePeg = new SquarePeg(4);
+
+    System.out.println(hole.canFit(new SquarePegAdapter(squarePeg)));
   }
 }
