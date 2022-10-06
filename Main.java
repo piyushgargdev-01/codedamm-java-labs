@@ -1,14 +1,15 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
   public static void main(String args[]) {
-    int[] arr = new int[5];
-    arr[0] = 10;
-    arr[1] = 20;
-    arr[2] = 30;
-    arr[3] = 40;
+    List<Integer> list = new ArrayList<>();
+    list.add(10);
+    list.add(20);
+    list.add(30);
+    list.add(40);
 
-    System.out.println(Arrays.toString(arr));
+    System.out.println(list);
   }
 }
