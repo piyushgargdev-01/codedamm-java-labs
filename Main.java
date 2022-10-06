@@ -1,79 +1,44 @@
-import java.util.Scanner;
+class Car {
 
-interface Vehicle {
-  String type = null;
-  void deliver();
-}
+  public String color;
+  public String make;
+  public String model;
 
-class Truck implements Vehicle {
+  public int cc;
+  public int price;
+  public int bhp;
+  public int torqe;
 
-  public String type;
-
-  Truck(String type) {
-    this.type = type;
-  }
-
-  @Override
-  public void deliver() {
-    System.out.println("Deliver products via " + this.type);
+  void startCar() {
+    System.out.println(make + " " + model + " is now started");
   }
 }
 
-class Ship implements Vehicle {
+class CarBuilder {
 
-  public String type;
-
-  Ship(String type) {
-    this.type = type;
-  }
-
-  @Override
-  public void deliver() {
-    System.out.println("Deliver products via " + this.type);
-  }
-}
-
-class Airplane implements Vehicle {
-
-  public String type;
-
-  Airplane(String type) {
-    this.type = type;
-  }
-
-  @Override
-  public void deliver() {
-    System.out.println("Deliver products via " + this.type);
+  public static Car buildMyCar(
+    String make,
+    String model,
+    String color,
+    int cc,
+    int price,
+    int bhp
+  ) {
+    Car car = new Car();
+    car.make = make;
+    car.model = model;
+    car.color = color;
+    car.cc = cc;
+    car.price = price;
+    car.bhp = bhp;
+    return car;
   }
 }
 
-class VehicleFactory {
-
-  public static Vehicle getVehicle(int load) {
-    Vehicle object = null;
-
-    if (load < 100) {
-      // Truck
-      object = new Truck("Truck");
-    } else if (load > 100 && load < 400) {
-      // Airplane
-      object = new Airplane("Airplane");
-    } else {
-      // Ship
-      object = new Ship("Ship");
-    }
-
-    return object;
-  }
-}
-
-public class FactoryPattern {
+public class Builder {
 
   public static void main(String args[]) {
-    Scanner scanner = new Scanner(System.in);
-    int load = scanner.nextInt();
-
-    Vehicle vehicle = VehicleFactory.getVehicle(load);
-    vehicle.deliver();
+    Car car = CarBuilder.buildMyCar("Kia", "Seltos", "White", 1999, 2000, 100);
+    car.startCar();
   }
 }
