@@ -1,33 +1,79 @@
-class DatabaseService {
+import java.util.Scanner;
 
-  private static DatabaseService obj;
+interface Vehicle {
+  String type = null;
+  void deliver();
+}
 
-  private DatabaseService() {
-    System.out.println("Open a connection with DB");
+class Truck implements Vehicle {
+
+  public String type;
+
+  Truck(String type) {
+    this.type = type;
   }
 
-  public static DatabaseService getInstance() {
-    if (obj == null) obj = new DatabaseService();
-    return obj;
-  }
-
-  public void getDataFromTables() {
-    System.out.println("Getting data from db");
-  }
-
-  public void putDataInDatabase() {
-    System.out.println("Putting data in db");
+  @Override
+  public void deliver() {
+    System.out.println("Deliver products via " + this.type);
   }
 }
 
-public class Main {
+class Ship implements Vehicle {
+
+  public String type;
+
+  Ship(String type) {
+    this.type = type;
+  }
+
+  @Override
+  public void deliver() {
+    System.out.println("Deliver products via " + this.type);
+  }
+}
+
+class Airplane implements Vehicle {
+
+  public String type;
+
+  Airplane(String type) {
+    this.type = type;
+  }
+
+  @Override
+  public void deliver() {
+    System.out.println("Deliver products via " + this.type);
+  }
+}
+
+class VehicleFactory {
+
+  public static Vehicle getVehicle(int load) {
+    Vehicle object = null;
+
+    if (load < 100) {
+      // Truck
+      object = new Truck("Truck");
+    } else if (load > 100 && load < 400) {
+      // Airplane
+      object = new Airplane("Airplane");
+    } else {
+      // Ship
+      object = new Ship("Ship");
+    }
+
+    return object;
+  }
+}
+
+public class FactoryPattern {
 
   public static void main(String args[]) {
-    DatabaseService db = DatabaseService.getInstance();
-    db = DatabaseService.getInstance();
-    db = DatabaseService.getInstance();
+    Scanner scanner = new Scanner(System.in);
+    int load = scanner.nextInt();
 
-    db.getDataFromTables();
-    db.putDataInDatabase();
+    Vehicle vehicle = VehicleFactory.getVehicle(load);
+    vehicle.deliver();
   }
 }
