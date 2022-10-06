@@ -4,12 +4,13 @@ import java.util.List;
 public class Main {
 
   public static void main(String args[]) {
-    int[][] matrix = new int[][] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+    int[] arr = new int[] { 1, 1, 1, 2, 3, 2, 4, 4, 5, 6 };
+    Set<Integer> set = new HashSet<>();
 
-    for (int i = 0; i < matrix.length; i++) {
-      for (int j = 0; j < matrix[i].length; j++) {
-        System.out.println(matrix[i][j]);
-      }
+    for (int i = 0; i < arr.length; i++) {
+      set.add(arr[i]);
     }
+
+    System.out.println(set);
   }
 }
