@@ -1,71 +1,79 @@
-abstract class Command {
+import java.util.ArrayList;
+import java.util.List;
 
-  private WhiteboardApp app;
-
-  Command(WhiteboardApp app) {
-    this.app = app;
-  }
-
-  public abstract void execute();
+interface Observer {
+  void onNotification(Video video);
 }
 
-class ChangePenColorCommand extends Command {
+class Video {
 
-  private WhiteboardApp app;
+  public String title;
+  public String cat;
 
-  ChangePenColorCommand(WhiteboardApp app) {
-    super(app);
-    this.app = app;
+  Video(String title) {
+    this.title = title;
+  }
+}
+
+class Subscriber implements Observer {
+
+  private String name;
+
+  Subscriber(String name) {
+    this.name = name;
+  }
+
+  public String toString() {
+    return this.name;
   }
 
   @Override
-  public void execute() {
-    this.app.activeColor = "Blue";
+  public void onNotification(Video video) {
+    System.out.println(name + ": A new video is published " + video.title);
   }
 }
 
-class ChangeToolCommand extends Command {
+class PiyushChannel {
 
-  private WhiteboardApp app;
+  private List<Subscriber> subscribers;
 
-  ChangeToolCommand(WhiteboardApp app) {
-    super(app);
-    this.app = app;
+  PiyushChannel() {
+    this.subscribers = new ArrayList<>();
   }
 
-  @Override
-  public void execute() {
-    this.app.activeTool = "Pen";
+  public void publishVideo(Video video) {
+    for (Subscriber sub : subscribers) sub.onNotification(video);
+  }
+
+  public void addSubscriber(Subscriber subscriber) {
+    this.subscribers.add(subscriber);
+  }
+
+  public void removeSubscriber(Subscriber subscriber) {
+    this.subscribers.remove(subscriber);
+  }
+
+  public List<Subscriber> getSubscribers() {
+    return this.subscribers;
   }
 }
 
-class WhiteboardApp {
-
-  public String activeColor;
-  public String activeTool;
-  public String textOnScreen;
-
-  public void executeCommand(Command cmd) {
-    cmd.execute();
-  }
-}
-
-public class CommandDesignPattern {
+public class ObserableDesignPattern {
 
   public static void main(String args[]) {
-    WhiteboardApp app = new WhiteboardApp();
-    ChangePenColorCommand changePenColorCommand = new ChangePenColorCommand(
-      app
-    );
-    ChangeToolCommand changeToolCommand = new ChangeToolCommand(app);
+    PiyushChannel channel = new PiyushChannel();
+    SubscriberIterator iterator = new SubscriberIterator(channel);
 
-    System.out.println("Active Color " + app.activeColor);
-    System.out.println("Active Tool " + app.activeTool);
+    channel.publishVideo(new Video("Complete React Series"));
 
-    app.executeCommand(changePenColorCommand);
-    app.executeCommand(changeToolCommand);
+    Subscriber jhon = new Subscriber("Jhon");
+    Subscriber jane = new Subscriber("Jane");
+    Subscriber bill = new Subscriber("Bill");
 
-    System.out.println("Active Color " + app.activeColor);
-    System.out.println("Active Tool " + app.activeTool);
+    channel.addSubscriber(jhon);
+    channel.addSubscriber(bill);
+    channel.addSubscriber(jane);
+
+    channel.publishVideo(new Video("Complete java Course"));
   }
 }
