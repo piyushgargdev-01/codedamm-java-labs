@@ -66,6 +66,13 @@ class Student extends Person {
     );
   }
 
+  public void removeAllFriends() {
+    for (Student friend : this.friends) {
+      friend.friends.remove(this);
+      this.friends.remove(friend);
+    }
+  }
+
   public String toString() {
     return this.getFullName();
   }
