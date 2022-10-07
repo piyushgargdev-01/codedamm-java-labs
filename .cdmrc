@@ -1,3 +1,2 @@
-terminal-one: echo "Hello from Piyush Garg 👋🏻"
 tabs: ['Main.java']
 run-button: javac Main.java && java Main
